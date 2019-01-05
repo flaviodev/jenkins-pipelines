@@ -35,20 +35,16 @@ pipeline {
         }
         
         stage('SSH transfer') {
-            script {
-                sshPublisher(
-                    continueOnError: false, failOnError: true,
-                    publishers: [
-                        sshPublisherDesc(
-                        verbose: true,
+            steps {
+                script {
+                    sshPublisher(publishers: [sshPublisherDesc(configName: 'server-producao', 
                         transfers: [
                             sshTransfer(
                               sourceFiles: "target/*.jar",
                               remoteDirectory: "/home/vagrant",
                               execCommand: "ls")
-                        ])
-                    ]
-                )
+                        ])])
+                }        
             }
         }        
     }   
