@@ -32,8 +32,8 @@ pipeline {
                     sshPublisher(publishers: [sshPublisherDesc(configName: 'server-producao', 
                         transfers: [
                             sshTransfer(
-                              sourceFiles: "target/*.jar,Dockerfile",
-                              execCommand: "sudo docker rmi -f delta-rent-a-car && sudo docker build -t delta-rent-a-car . && sudo docker rm -f delta-rent-a-car && sudo docker run -d --name delta-rent-a-car delta-rent-a-car")
+                              sourceFiles: "target/*.jar,Dockerfile,build-and-run-docker.sh",
+                              execCommand: "./build-and-run-docker.sh && rm -rf target && rm -rf Dockerfile && rm -rf build-and-run-docker.sh")
                         ])])
                 }        
             }
