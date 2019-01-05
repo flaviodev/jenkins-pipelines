@@ -28,13 +28,28 @@ pipeline {
 
         stage('Deploy') {
            steps {
-              sh 'scp target/*.jar user@server:/home/vagrant'
-              sh 'ssh user@server "ls"'
-              
               withCredentials([sshUserPrivateKey(credentialsId: "ssh-producao", keyFileVariable: 'keyfile')]) {
                  //sh 'scp -i ${keyfile} target/*.jar vagrant@172.16.0.10:/home/vagrant'
               }
            }
         }
-    }
+        
+        stage('SSH transfer') {
+            script {
+                sshPublisher(
+                    continueOnError: false, failOnError: true,
+                    publishers: [
+                        sshPublisherDesc(
+                        verbose: true,
+                        transfers: [
+                            sshTransfer(
+                              sourceFiles: "target/*.jar",
+                              remoteDirectory: "/home/vagrant",
+                              execCommand: "ls")
+                        ])
+                    ]
+                )
+            }
+        }        
+    }   
 }
