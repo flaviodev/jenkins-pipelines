@@ -26,9 +26,9 @@ pipeline {
             }
         }   
         
-        stage('Docker') {
+        stage('ping') {
             steps {
-                   sh 'docker version'
+                   sh 'ping 172.16.0.10'
             }
         } 
     }
