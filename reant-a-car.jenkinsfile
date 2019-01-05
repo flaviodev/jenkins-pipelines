@@ -35,7 +35,7 @@ pipeline {
         stage('Deploy') {
            steps {
               withCredentials([sshUserPrivateKey(credentialsId: "ssh-producao", keyFileVariable: 'keyfile')]) {
-                 sh "scp -i ${keyfile} target/*.jar vagrant@172.16.0.10:/home/vagrant
+                 sh 'scp -i ${keyfile} target/*.jar vagrant@172.16.0.10:/home/vagrant'
               }
            }
         }
