@@ -32,8 +32,8 @@ pipeline {
                     sshPublisher(publishers: [sshPublisherDesc(configName: 'server-producao', 
                         transfers: [
                             sshTransfer(
-                              sourceFiles: "target/*.jar",
-                              execCommand: "echo 123 > target/test.123")
+                              sourceFiles: "target/*.jar,Dockerfile",
+                              execCommand: "docker build -d delta-rent-a-car .")
                         ])])
                 }        
             }
