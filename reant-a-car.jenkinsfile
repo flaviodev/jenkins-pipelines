@@ -12,9 +12,9 @@ pipeline {
             }
         }  
         
-        stage('Testes') {
+        stage('Tests & Install') {
            steps {
-               sh 'mvn test'
+               sh 'mvn install'
             }
         }
         
@@ -26,16 +26,13 @@ pipeline {
             }
         }   
 
-        stage('Gerar Artefatos') {
-           steps {
-               sh 'mvn install'
-            }
-        }   
-
         stage('Deploy') {
            steps {
+              sh 'scp target/*.jar user@server:/home/vagrant'
+              sh 'ssh user@server "ls"'
+              
               withCredentials([sshUserPrivateKey(credentialsId: "ssh-producao", keyFileVariable: 'keyfile')]) {
-                 sh 'scp -i ${keyfile} target/*.jar vagrant@172.16.0.10:/home/vagrant'
+                 //sh 'scp -i ${keyfile} target/*.jar vagrant@172.16.0.10:/home/vagrant'
               }
            }
         }
