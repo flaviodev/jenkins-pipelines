@@ -25,24 +25,17 @@ pipeline {
                }
             }
         }   
-
-        stage('Deploy') {
-           steps {
-              withCredentials([sshUserPrivateKey(credentialsId: "ssh-producao", keyFileVariable: 'keyfile')]) {
-                 //sh 'scp -i ${keyfile} target/*.jar vagrant@172.16.0.10:/home/vagrant'
-              }
-           }
-        }
         
-        stage('SSH transfer') {
+        stage('Deploy') {
             steps {
                 script {
                     sshPublisher(publishers: [sshPublisherDesc(configName: 'server-producao', 
                         transfers: [
                             sshTransfer(
                               sourceFiles: "target/*.jar",
+                              targetFiles: "deploy",
                               remoteDirectory: "/home/vagrant",
-                              execCommand: "ls")
+                              execCommand: "echo 123 > deploy/test.123")
                         ])])
                 }        
             }
