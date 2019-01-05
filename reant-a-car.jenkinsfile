@@ -25,11 +25,19 @@ pipeline {
                }
             }
         }   
-        
-        stage('ping') {
-            steps {
-                   sh 'ping 172.16.0.10'
+
+        stage('Gerar Artefatos') {
+           steps {
+               sh 'mvn install'
             }
-        } 
+        }   
+
+        stage('Deploy') {
+           steps {
+              withCredentials([sshUserPrivateKey(credentialsId: "ssh-producao", keyFileVariable: 'keyfile')]) {
+                 sh "scp -i ${keyfile} target/*.jar vagrant@172.16.0.10:/home/vagrant
+              }
+           }
+        }
     }
 }
