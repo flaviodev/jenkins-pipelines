@@ -34,7 +34,6 @@ pipeline {
                             sshTransfer(
                               sourceFiles: "target/*.jar",
                               targetFiles: "deploy",
-                              remoteDirectory: "/home/vagrant",
                               execCommand: "echo 123 > deploy/test.123")
                         ])])
                 }        
