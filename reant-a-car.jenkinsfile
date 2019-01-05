@@ -33,8 +33,7 @@ pipeline {
                         transfers: [
                             sshTransfer(
                               sourceFiles: "target/*.jar",
-                              targetFiles: "deploy",
-                              execCommand: "echo 123 > deploy/test.123")
+                              execCommand: "echo 123 > target/test.123")
                         ])])
                 }        
             }
