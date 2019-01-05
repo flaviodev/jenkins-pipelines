@@ -33,7 +33,7 @@ pipeline {
                         transfers: [
                             sshTransfer(
                               sourceFiles: "target/*.jar,Dockerfile",
-                              execCommand: "docker build -t delta-rent-a-car .")
+                              execCommand: "sudo docker build -t delta-rent-a-car .")
                         ])])
                 }        
             }
